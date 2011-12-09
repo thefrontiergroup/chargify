@@ -32,5 +32,6 @@ DEPENDENCIES
   jnunemaker-matchy (= 0.4.0)
   mg (>= 0.0.8)
   mocha (~> 0.9.8)
+  multi_json (~> 1.0)
   shoulda (>= 2.10.1)
   test-unit (>= 2.3.0)

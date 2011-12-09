@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<fakeweb>, [">= 1.2.5"])
   s.add_development_dependency('mg', ['>= 0.0.8'])
   s.add_development_dependency('test-unit', ['>= 2.3.0'])
+  s.add_development_dependency(%q<multi_json>, ["~> 1.0"])
 end
