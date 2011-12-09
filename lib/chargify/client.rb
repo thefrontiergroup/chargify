@@ -2,6 +2,8 @@ module Chargify
   class Client
     include HTTParty
 
+    format :json
+
     headers 'Content-Type' => 'application/json'
 
     attr_reader :api_key, :subdomain
