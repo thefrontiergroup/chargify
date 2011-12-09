@@ -83,7 +83,7 @@ module Chargify
     # response.success? -> true if response code is 201, false otherwise
     def create_subscription(subscription_attributes={})
       raw_response = post("/subscriptions.json", :body => {:subscription => subscription_attributes})
-      created  = true if raw_response.code == 201
+      created  = raw_response.code == 201
       response = Hashie::Mash.new(raw_response)
       (response.subscription || response).update(:success? => created)
     end
@@ -92,7 +92,7 @@ module Chargify
     # response.success? -> true if response code is 200, false otherwise
     def update_subscription(sub_id, subscription_attributes = {})
       raw_response = put("/subscriptions/#{sub_id}.json", :body => {:subscription => subscription_attributes})
-      updated      = true if raw_response.code == 200
+      updated      = raw_response.code == 200
       response     = Hashie::Mash.new(raw_response)
       (response.subscription || response).update(:success? => updated)
     end
@@ -101,14 +101,14 @@ module Chargify
     # response.success? -> true if response code is 200, false otherwise
     def cancel_subscription(sub_id, message="")
       raw_response = delete("/subscriptions/#{sub_id}.json", :body => {:subscription => {:cancellation_message => message} })
-      deleted      = true if raw_response.code == 200
+      deleted      = raw_response.code == 200
       response     = Hashie::Mash.new(raw_response)
       (response.subscription || response).update(:success? => deleted)
     end
 
     def reactivate_subscription(sub_id)
       raw_response = put("/subscriptions/#{sub_id}/reactivate.json", :body => "")
-      reactivated  = true if raw_response.code == 200
+      reactivated  = raw_response.code == 200
       response     = Hashie::Mash.new(raw_response) rescue Hashie::Mash.new
       (response.subscription || response).update(:success? => reactivated)
     end
@@ -127,7 +127,7 @@ module Chargify
     def migrate_subscription(sub_id, product_id_or_attributes)
       product_id_or_attributes = {:product_id => product_id} unless product_id_or_attributes.is_a? Hash
       raw_response = post("/subscriptions/#{sub_id}/migrations.json", :body => product_id_or_attributes)
-      success      = true if raw_response.code == 200
+      success      = raw_response.code == 200
       response     = Hashie::Mash.new(raw_response)
       (response.subscription || {}).update(:success? => success)
     end
@@ -135,7 +135,7 @@ module Chargify
     def adjust_subscription(sub_id, attributes = {})
       raw_response = post("/subscriptions/#{sub_id}/adjustments.json",
                           :body => { :adjustment => attributes })
-      created = true if raw_response.code == 201
+      created = raw_response.code == 201
       response = Hashie::Mash.new(raw_response)
       (response.adjustment || response).update(:success? => created)
     end
