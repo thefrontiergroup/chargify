@@ -136,9 +136,10 @@ module Chargify
       response = Hashie::Mash.new(raw_response)
       (response.charge || response).update(:success? => success)
     end
-    
-    def migrate_subscription(sub_id, product_id)
-      raw_response = post("/subscriptions/#{sub_id}/migrations.json", :body => {:product_id => product_id })
+
+    def migrate_subscription(sub_id, product_id_or_attributes)
+      product_id_or_attributes = {:product_id => product_id} unless product_id_or_attributes.is_a? Hash
+      raw_response = post("/subscriptions/#{sub_id}/migrations.json", :body => product_id_or_attributes)
       success      = true if raw_response.code == 200
       response     = Hashie::Mash.new(raw_response)
       (response.subscription || {}).update(:success? => success)
